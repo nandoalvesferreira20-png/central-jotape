@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agenda | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/agenda.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html">Visão geral</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="agenda.html" aria-current="page">Agenda</a>
+        <a href="trajetoria.html">Trajetória 2026</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Agenda</h1></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <p class="muted">Cadastre apenas eventos com informações confirmadas. O horário corresponde ao local do evento.</p><section class="panel" aria-label="Registros"><div class="toolbar"><button class="secondary" type="button" data-refresh>Atualizar lista</button></div><div data-records aria-live="polite"></div><div class="pagination"><button class="secondary" type="button" data-previous disabled>Anterior</button><span data-page></span><button class="secondary" type="button" data-next disabled>Próxima</button></div></section>
+<form id="event-form" class="panel"><fieldset disabled><h2 id="form-title">Novo evento</h2><p class="help">* Campos obrigatórios.</p><div class="form-grid">
+<div class="field full">
+  <label for="title">Título do evento *</label>
+  <input id="title" name="title" type="text" required maxlength="240">
+  
+</div>
+<div class="field full"><label for="description">Descrição</label><textarea id="description" name="description" maxlength="10000"></textarea></div>
+<div class="field">
+  <label for="event_date">Data *</label>
+  <input id="event_date" name="event_date" type="date" required>
+  
+</div>
+<div class="field">
+  <label for="event_time">Horário local</label>
+  <input id="event_time" name="event_time" type="time">
+  
+</div>
+<div class="field">
+  <label for="city">Cidade *</label>
+  <input id="city" name="city" type="text" required maxlength="120">
+  
+</div>
+<div class="field">
+  <label for="venue">Local</label>
+  <input id="venue" name="venue" type="text" maxlength="240">
+  
+</div>
+<div class="field full">
+  <label for="ticket_url">URL HTTPS dos ingressos</label>
+  <input id="ticket_url" name="ticket_url" type="url" maxlength="240">
+  
+</div>
+<div class="field full">
+  <label for="image_url">URL HTTPS da imagem</label>
+  <input id="image_url" name="image_url" type="url" maxlength="240">
+  
+</div>
+<div class="upload full"><label for="upload-image_url">Enviar imagem para a mídia pública</label><input id="upload-image_url" type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-upload="image_url"><span class="help">JPEG, PNG, WebP ou AVIF. Até 5 MB. Arquivos enviados são públicos, inclusive em rascunhos.</span><button type="button" class="secondary" data-upload-button>Enviar imagem</button><p class="help" role="status" data-upload-status></p></div>
+<div class="field"><label for="status">Publicação</label><select id="status" name="status"><option value="draft">Rascunho</option><option value="published">Publicado</option></select></div>
+</div><div class="actions form-actions"><button type="submit">Salvar evento</button><button type="reset" class="secondary">Novo / limpar formulário</button></div></fieldset></form>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+

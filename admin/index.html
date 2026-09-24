@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Visão geral | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/dashboard.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html" aria-current="page">Visão geral</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="trajetoria.html">Trajetória 2026</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Visão geral</h1></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <p class="muted">Organize o conteúdo da Central. Somente administradores autorizados podem gerenciar os registros.</p>
+<div class="summary-grid">
+  <section class="panel"><h2>Notícias</h2><strong class="count" data-count="news">—</strong><a href="noticias.html">Gerenciar notícias</a></section>
+  <section class="panel"><h2>Agenda</h2><strong class="count" data-count="events">—</strong><a href="agenda.html">Gerenciar eventos</a></section>
+  <section class="panel"><h2>Batalhas</h2><strong class="count" data-count="trajectory_matches">—</strong><a href="trajetoria.html">Gerenciar trajetória</a></section>
+</div>
+<section class="panel"><h2>Base editorial</h2><p>Notícias, eventos e trajetória começam como rascunhos. A publicação libera a leitura pela API, conforme as políticas do banco.</p><p class="muted">Notícias publicadas aparecem no portal. Os três destaques mais recentes alimentam a área editorial da home; sem destaques, a seleção original é mantida.</p></section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+

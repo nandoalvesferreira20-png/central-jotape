@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Trajetória 2026 | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/trajetoria.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html">Visão geral</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="trajetoria.html" aria-current="page">Trajetória 2026</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Trajetória 2026</h1></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <p class="muted">Organização dos dados de 2026. Esta etapa não define o design público da trajetória.</p>
+<form id="trajectory-form" class="panel"><fieldset disabled><h2>Informações da trajetória</h2><p class="help">* Campos obrigatórios. Ano fixo: 2026.</p><div class="form-grid">
+<div class="field full">
+  <label for="title">Título *</label>
+  <input id="title" name="title" type="text" required maxlength="240">
+  
+</div>
+<div class="field full">
+  <label for="subtitle">Subtítulo</label>
+  <input id="subtitle" name="subtitle" type="text" maxlength="500">
+  
+</div>
+<div class="field">
+  <label for="current_stage">Etapa atual</label>
+  <input id="current_stage" name="current_stage" type="text" maxlength="240">
+  
+</div>
+<div class="field">
+  <label for="current_status">Situação na competição</label>
+  <input id="current_status" name="current_status" type="text" maxlength="240" aria-describedby="current_status-help">
+  <span class="help" id="current_status-help">Texto livre sobre a trajetória; não controla a publicação.</span>
+</div>
+<div class="field">
+  <label for="next_stage">Próxima etapa</label>
+  <input id="next_stage" name="next_stage" type="text" maxlength="240">
+  
+</div>
+<div class="field"><label for="publication_status">Publicação da trajetória e das batalhas</label><select id="publication_status" name="publication_status"><option value="draft">Rascunho</option><option value="published">Publicado</option></select></div>
+<div class="field full">
+  <label for="hero_image_url">URL HTTPS da imagem principal</label>
+  <input id="hero_image_url" name="hero_image_url" type="url" maxlength="240">
+  
+</div>
+<div class="upload full"><label for="upload-hero_image_url">Enviar imagem para a mídia pública</label><input id="upload-hero_image_url" type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-upload="hero_image_url"><span class="help">JPEG, PNG, WebP ou AVIF. Até 5 MB. Arquivos enviados são públicos, inclusive em rascunhos.</span><button type="button" class="secondary" data-upload-button>Enviar imagem</button><p class="help" role="status" data-upload-status></p></div>
+</div><div class="actions form-actions"><button type="submit">Salvar trajetória</button></div></fieldset></form>
+<section class="panel" aria-labelledby="matches-title"><h2 id="matches-title">Batalhas</h2><button type="button" class="secondary" data-refresh>Atualizar lista</button><div data-matches aria-live="polite"></div><div class="pagination"><button class="secondary" type="button" data-previous disabled>Anterior</button><span data-page></span><button class="secondary" type="button" data-next disabled>Próxima</button></div></section>
+<form id="match-form" class="panel"><fieldset disabled><h2>Cadastro / edição de batalha</h2><p class="help">Salve a trajetória para habilitar este formulário. * Campos obrigatórios.</p><div class="form-grid">
+<div class="field full">
+  <label for="competition">Competição *</label>
+  <input id="competition" name="competition" type="text" required maxlength="240">
+  
+</div>
+<div class="field">
+  <label for="phase">Fase</label>
+  <input id="phase" name="phase" type="text" maxlength="120">
+  
+</div>
+<div class="field">
+  <label for="opponent">Adversário</label>
+  <input id="opponent" name="opponent" type="text" maxlength="120">
+  
+</div>
+<div class="field">
+  <label for="jotape_score">Placar de Jotapê</label>
+  <input id="jotape_score" name="jotape_score" type="number" min="0" max="9999" step="1" aria-describedby="jotape_score-help">
+  <span class="help" id="jotape_score-help">Vazio significa não informado; zero é um placar válido.</span>
+</div>
+<div class="field">
+  <label for="opponent_score">Placar do adversário</label>
+  <input id="opponent_score" name="opponent_score" type="number" min="0" max="9999" step="1">
+  
+</div>
+<div class="field"><label for="result">Resultado</label><select id="result" name="result"><option value="pending">Pendente</option><option value="win">Vitória</option><option value="loss">Derrota</option><option value="draw">Empate</option></select></div>
+<div class="field">
+  <label for="battle_date">Data da batalha</label>
+  <input id="battle_date" name="battle_date" type="date">
+  
+</div>
+<div class="field">
+  <label for="position">Ordem de exibição *</label>
+  <input id="position" name="position" type="number" required value="0" min="0" max="9999" step="1">
+  
+</div>
+<div class="field">
+  <label for="video_url">URL HTTPS do vídeo</label>
+  <input id="video_url" name="video_url" type="url" maxlength="240">
+  
+</div>
+<div class="field full">
+  <label for="image_url">URL HTTPS da imagem</label>
+  <input id="image_url" name="image_url" type="url" maxlength="240">
+  
+</div>
+<div class="upload full"><label for="upload-image_url">Enviar imagem para a mídia pública</label><input id="upload-image_url" type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-upload="image_url"><span class="help">JPEG, PNG, WebP ou AVIF. Até 5 MB. Arquivos enviados são públicos, inclusive em rascunhos.</span><button type="button" class="secondary" data-upload-button>Enviar imagem</button><p class="help" role="status" data-upload-status></p></div>
+</div><div class="actions form-actions"><button type="submit">Salvar batalha</button><button type="reset" class="secondary">Novo / limpar formulário</button></div></fieldset></form>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+

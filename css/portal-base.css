@@ -1,0 +1,14 @@
+/* Estrutura provisória das novas páginas. Não modifica a landing aprovada. */
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #111110; color: #eeede7; font: 16px/1.6 Arial, Helvetica, sans-serif; }
+a { color: inherit; text-underline-offset: 5px; }
+a:focus-visible { outline: 2px solid #f35735; outline-offset: 5px; }
+header, main, footer { max-width: 1000px; margin-inline: auto; padding: 28px 24px; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; border-bottom: 1px solid #383833; }
+nav { display: flex; flex-wrap: wrap; gap: 20px; }
+main { min-height: 60svh; padding-block: 65px; }
+h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.15; }
+p { max-width: 650px; color: #b8b8b0; }
+footer { border-top: 1px solid #383833; font-size: 13px; }
+

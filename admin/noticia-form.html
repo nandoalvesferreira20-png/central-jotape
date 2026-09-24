@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Nova notícia | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/noticias.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html">Visão geral</a>
+        <a href="noticias.html" aria-current="page">Notícias</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="trajetoria.html">Trajetória 2026</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Nova notícia</h1></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <form id="news-form" class="panel"><fieldset disabled><p class="help">* Campos obrigatórios. O conteúdo é texto simples nesta etapa; HTML não é interpretado.</p><div class="form-grid">
+<div class="field">
+  <label for="title">Título *</label>
+  <input id="title" name="title" type="text" required maxlength="240">
+  
+</div>
+<div class="field">
+  <label for="slug">Slug *</label>
+  <input id="slug" name="slug" type="text" required maxlength="160" aria-describedby="slug-help">
+  <span class="help" id="slug-help">Exemplo: nome-da-noticia. Deve ser único.</span>
+</div>
+<div class="field full"><label for="excerpt">Resumo</label><textarea id="excerpt" name="excerpt" maxlength="500"></textarea></div>
+<div class="field full"><label for="content">Conteúdo *</label><textarea id="content" name="content" maxlength="100000" required class="content"></textarea></div>
+<div class="field">
+  <label for="category">Categoria *</label>
+  <input id="category" name="category" type="text" required maxlength="80">
+  
+</div>
+<div class="field">
+  <label for="author_name">Nome do autor *</label>
+  <input id="author_name" name="author_name" type="text" required maxlength="120">
+  
+</div>
+<div class="field"><label for="status">Estado salvo</label><select id="status" name="status"><option value="draft">Rascunho</option><option value="published">Publicado</option></select><span class="help">Salvar rascunho e Publicar definem o estado ao salvar.</span></div>
+<div class="field">
+  <label for="published_at">Data de publicação</label>
+  <input id="published_at" name="published_at" type="datetime-local" aria-describedby="published_at-help">
+  <span class="help" id="published_at-help">Horário deste dispositivo. Vazio ao publicar = agora; data futura agenda a leitura pública.</span>
+</div>
+<div class="checkbox full"><input id="featured" name="featured" type="checkbox"><label for="featured">Destacar notícia na home (até 3 mais recentes)</label></div>
+<div class="field full">
+  <label for="cover_url">URL HTTPS da capa</label>
+  <input id="cover_url" name="cover_url" type="url" maxlength="2000">
+  
+</div>
+<div class="upload full"><label for="upload-cover_url">Enviar imagem para a mídia pública</label><input id="upload-cover_url" type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-upload="cover_url"><span class="help">JPEG, PNG, WebP ou AVIF. Até 5 MB. Arquivos enviados são públicos, inclusive em rascunhos.</span><button type="button" class="secondary" data-upload-button>Enviar imagem</button><img class="cover-preview" data-cover-preview alt="Prévia da capa selecionada" hidden><p class="help" role="status" data-upload-status></p></div>
+</div><div class="actions form-actions"><button type="submit" name="action" value="draft" class="secondary">Salvar rascunho</button><button type="submit" name="action" value="published">Publicar</button><button type="button" class="secondary" data-preview>Visualizar</button><button type="button" class="secondary" data-cancel>Cancelar</button></div></fieldset></form>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+

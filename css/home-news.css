@@ -1,0 +1,7 @@
+/* Somente os espaços preenchidos pelo CMS. O editorial estático não é afetado. */
+#central[data-news-loaded] .story-main,
+#central[data-news-loaded] .story-small,
+#central[data-news-loaded] .story-small a > div { min-width: 0; }
+#central[data-news-loaded] h3,
+#central[data-news-loaded] .eyebrow,
+#central[data-news-loaded] .story-main p { overflow-wrap: anywhere; }

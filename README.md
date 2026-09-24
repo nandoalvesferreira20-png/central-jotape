@@ -4,13 +4,13 @@ Demonstração de experiência digital criada pela Loung Tech para apresentar um
 
 ## Executar
 
-Abra `index.html` diretamente ou, na pasta do projeto, execute:
+Na pasta do projeto, execute (Node 22+):
 
 ```sh
-python -m http.server 4173 --bind 127.0.0.1
+npm run dev
 ```
 
-Acesse http://127.0.0.1:4173. Não há build, dependências JavaScript, frameworks, rastreadores, formulários ou backend.
+Acesse http://127.0.0.1:4175. O layout da landing continua disponível sem Supabase. A integração de notícias e o painel usam módulos JavaScript e devem ser servidos por HTTP, não por `file://`.
 
 ## Organização
 
@@ -74,3 +74,22 @@ Sempre atualizar `alt`, `width`, `height`, enquadramento e créditos junto com a
 - Menu testado: abrir, fechar, Escape, retorno do foco, Shift+Tab e seleção de seção.
 - `prefers-reduced-motion` tratado no CSS e JavaScript; contadores vazios não são animados e não criam estatísticas fictícias.
 - Recursos locais e âncoras verificados; a disponibilidade futura dos destinos externos depende das plataformas.
+
+
+## V2 — infraestrutura editorial
+
+A página aprovada foi preservada. Consulte [o guia completo de Supabase](docs/SUPABASE.md) para configuração, tabelas, RLS, Storage, Vercel e testes. O [inventário da V2](docs/V2-ARQUIVOS.md) lista os arquivos adicionados.
+
+Para abrir o painel local: `npm run dev`, depois `http://127.0.0.1:4175/admin/login.html`. A configuração pública já está preenchida em `config/supabase-config.js`; aplique as duas migrações e autorize sua conta antes do primeiro login. Nenhuma senha ou chave secreta foi incluída.
+
+
+## CMS de notícias
+
+Fluxo implementado: login → criar/editar rascunho → prévia → publicar → listagem pública, detalhe por slug e destaques na home. Reutiliza a V2 e preserva o layout aprovado.
+
+- [Configuração do Supabase e primeiro administrador](docs/SUPABASE.md)
+- [Relatório da etapa, arquivos e limites da validação](docs/CMS-NOTICIAS.md)
+
+O projeto Supabase real já foi criado. `config/supabase-config.js` contém somente `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` públicas; não há senha, chave secreta ou login de demonstração. A API de Auth respondeu à chave, mas as cinco tabelas do CMS ainda não estavam disponíveis na verificação. Execute as duas migrations e crie o primeiro admin conforme o guia. Os testes de navegador automatizados usam simulação somente em `tests/`; o teste editorial no projeto real será manual.
+
+[Conexão real: SQL, primeiro admin, Vercel, verificações e pendências](docs/CONEXAO-SUPABASE.md).

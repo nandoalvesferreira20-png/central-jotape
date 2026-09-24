@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Notícias | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/noticias.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html">Visão geral</a>
+        <a href="noticias.html" aria-current="page">Notícias</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="trajetoria.html">Trajetória 2026</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Notícias</h1><a class="button" href="noticia-form.html">Nova notícia</a></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <p class="muted">Gerencie rascunhos, publicações e agendamentos.</p><section class="panel" aria-label="Registros"><div class="toolbar"><button class="secondary" type="button" data-refresh>Atualizar lista</button></div><div data-records aria-live="polite"></div><div class="pagination"><button class="secondary" type="button" data-previous disabled>Anterior</button><span data-page></span><button class="secondary" type="button" data-next disabled>Próxima</button></div></section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+
