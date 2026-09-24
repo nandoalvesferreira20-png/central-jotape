@@ -102,6 +102,16 @@ test('migration: permissões reais de PostgreSQL para visitante, usuário comum 
     await assert.rejects(db.exec(`update public.profiles set role='admin' where id='${common}'`), /permission denied/i);
     await assert.rejects(db.exec('delete from public.profiles'), /permission denied/i);
     await db.exec('reset role');
+    const seed = await readFile(new URL('../supabase/trajectory-2026.example.sql', import.meta.url), 'utf8');
+    await db.exec(seed);
+    await db.exec(seed);
+    assert.equal(await count('trajectory'), 1, 'Seed não duplica trajetória');
+    assert.equal(await count('trajectory_matches'), 4, 'Seed não duplica batalhas');
+    assert.deepEqual((await db.query('select opponent_score from public.trajectory_matches order by position')).rows.map(row => row.opponent_score), [1,0,1,1]);
+    await role('anon');
+    assert.equal(await count('trajectory'), 0);
+    assert.equal(await count('trajectory_matches'), 0);
+    await db.exec('reset role');
     await db.exec(`delete from auth.users where id='${common}'`);
     assert.equal((await db.query('select count(*)::int n from public.profiles')).rows[0].n, 0, 'Perfil removido junto à conta');
   } finally { await db.close(); }

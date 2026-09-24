@@ -30,8 +30,9 @@
       <main class="main" id="main">
         <div class="page-heading"><h1>Trajetória 2026</h1></div>
         <p class="notice" role="status" aria-live="polite" data-message></p>
-        <p class="muted">Organização dos dados de 2026. Esta etapa não define o design público da trajetória.</p>
-<form id="trajectory-form" class="panel"><fieldset disabled><h2>Informações da trajetória</h2><p class="help">* Campos obrigatórios. Ano fixo: 2026.</p><div class="form-grid">
+        <p class="muted">Edite a trajetória e as batalhas. A página pública de 2026 mostra apenas a trajetória publicada.</p>
+<form id="trajectory-form" class="panel"><fieldset disabled><h2>Informações da trajetória</h2><p class="help">* Campos obrigatórios. A página pública consulta o ano 2026. Para abrir outro ano no painel, use ?year=ANO na URL.</p><div class="form-grid">
+<div class="field"><label for="year">Ano *</label><input id="year" name="year" type="number" min="2000" max="2100" value="2026" required></div>
 <div class="field full">
   <label for="title">Título *</label>
   <input id="title" name="title" type="text" required maxlength="240">
@@ -84,12 +85,12 @@
 </div>
 <div class="field">
   <label for="jotape_score">Placar de Jotapê</label>
-  <input id="jotape_score" name="jotape_score" type="number" min="0" max="9999" step="1" aria-describedby="jotape_score-help">
+  <input id="jotape_score" name="jotape_score" type="number" min="0" max="999" step="1" aria-describedby="jotape_score-help">
   <span class="help" id="jotape_score-help">Vazio significa não informado; zero é um placar válido.</span>
 </div>
 <div class="field">
   <label for="opponent_score">Placar do adversário</label>
-  <input id="opponent_score" name="opponent_score" type="number" min="0" max="9999" step="1">
+  <input id="opponent_score" name="opponent_score" type="number" min="0" max="999" step="1">
   
 </div>
 <div class="field"><label for="result">Resultado</label><select id="result" name="result"><option value="pending">Pendente</option><option value="win">Vitória</option><option value="loss">Derrota</option><option value="draw">Empate</option></select></div>
@@ -100,7 +101,7 @@
 </div>
 <div class="field">
   <label for="position">Ordem de exibição *</label>
-  <input id="position" name="position" type="number" required value="0" min="0" max="9999" step="1">
+  <input id="position" name="position" type="number" required value="0" min="0" max="9999" step="1"><span class="help">Menor posição aparece primeiro. Edite este campo e salve para reordenar; prefira posições diferentes.</span>
   
 </div>
 <div class="field">

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
-test('landing aprovada permanece intacta exceto pelo módulo de notícias', async () => {
+test('landing aprovada permanece intacta exceto pelo módulo de notícias e teaser da trajetória', async () => {
   const expected = {
     'index.html': '788332f7c58dce2fded39db29176b758de3e6bf6b9b5aa05636b063c8b4fc12a',
     'css/style.css': 'ce375d966ed699d4d5677ffc63df5d44327347b383a51001f3fe1b4ec4cb5a70',
@@ -11,7 +11,7 @@ test('landing aprovada permanece intacta exceto pelo módulo de notícias', asyn
   };
   for (const [file, hash] of Object.entries(expected)) {
     let source = await readFile(new URL('../' + file, import.meta.url));
-    if (file === 'index.html') source = Buffer.from(source.toString().replace('    <link rel="stylesheet" href="css/home-news.css">\n', '').replace('    <script type="module" src="js/public/home-news.js"></script>\n', ''));
+    if (file === 'index.html') source = Buffer.from(source.toString().replace(/      <!-- trajectory-teaser:start -->[\s\S]*?      <!-- trajectory-teaser:end -->\n/, '').replace(/    <link rel="stylesheet" href="css\/home-news.css">\r?\n/, '').replace(/    <script type="module" src="js\/public\/home-news.js"><\/script>\r?\n/, ''));
     const actual = createHash('sha256').update(source).digest('hex');
     assert.equal(actual, hash, file + ' alterado');
   }

@@ -6,7 +6,7 @@ import { required, optional, httpsUrl, enumValue, integer, dateOnly } from './va
 
 export function trajectoryPayload(data) {
   return {
-    year: 2026, title: required(data.get('title'), 'Título'), subtitle: optional(data.get('subtitle'), 500),
+    year: integer(data.get('year') ?? '2026', 'Ano', 2000, 2100), title: required(data.get('title'), 'Título'), subtitle: optional(data.get('subtitle'), 500),
     current_stage: optional(data.get('current_stage'), 240),
     current_status: optional(data.get('current_status'), 240),
     hero_image_url: httpsUrl(data.get('hero_image_url')), next_stage: optional(data.get('next_stage'), 240),
@@ -32,6 +32,11 @@ async function init() {
   const form = document.querySelector('#trajectory-form');
   const matchForm = document.querySelector('#match-form');
   const container = document.querySelector('[data-matches]');
+  const requestedYear = new URLSearchParams(location.search).get('year') || '2026';
+  let selectedYear;
+  try { selectedYear = integer(requestedYear, 'Ano', 2000, 2100); }
+  catch (error) { message(friendlyError(error), true); return; }
+  form.elements.year.value = selectedYear;
   let trajectoryId = null;
   let matchId = null;
   let page = 0;
@@ -65,6 +70,7 @@ async function init() {
           await loadMatches();
         } catch (error) { message(friendlyError(error), true); remove.disabled = false; }
       });
+      info.append(element('p', 'Jotapê ' + (row.jotape_score ?? '—') + ' × ' + (row.opponent_score ?? '—') + ' · Posição ' + row.position, 'muted'));
       actions.append(edit, remove); article.append(info, actions); container.append(article);
     }
     document.querySelector('[data-page]').textContent = count + ' batalha(s) · Página ' + (page + 1);
@@ -78,7 +84,7 @@ async function init() {
   document.querySelector('[data-refresh]').addEventListener('click', refreshMatches);
   message('Carregando trajetória…');
   try {
-    const { data, error } = await client.from('trajectory').select('*').eq('year', 2026).maybeSingle();
+    const { data, error } = await client.from('trajectory').select('*').eq('year', selectedYear).maybeSingle();
     if (error) throw error;
     if (data) { trajectoryId = data.id; setFields(form, data); }
     form.querySelector('fieldset').disabled = false;
@@ -100,7 +106,8 @@ async function init() {
         trajectoryId = saved.id;
         matchForm.querySelector('fieldset').disabled = false;
         await loadMatches();
-        message('Trajetória salva. O design público será desenvolvido em outra etapa.');
+        history.replaceState(null, '', 'trajetoria.html?year=' + saved.year);
+        message(saved.publication_status === 'published' ? 'Trajetória publicada. Recarregue a página pública para ver as alterações.' : 'Trajetória salva como rascunho. Ela e suas batalhas não aparecem publicamente.');
       } catch (error) { message(friendlyError(error), true); }
     });
   });

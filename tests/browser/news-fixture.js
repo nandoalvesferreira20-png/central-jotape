@@ -1,7 +1,7 @@
 // Backend em memória EXCLUSIVO DOS TESTES. Nenhum mock é importado pelo site.
 import { randomUUID } from 'node:crypto';
-export async function installNewsMock(context, { records = [], authorized = true } = {}) {
-  const state = { rows: structuredClone(records), files: new Map(), failRead: false, failUpload: false, failWrite: false };
+export async function installNewsMock(context, { records = [], authorized = true, trajectories = [], matches = [] } = {}) {
+  const state = { tables: { trajectory: structuredClone(trajectories), trajectory_matches: structuredClone(matches) }, rows: structuredClone(records), files: new Map(), failRead: false, failUpload: false, failWrite: false };
   await context.route('**/config/supabase-config.js', route => route.fulfill({ contentType: 'text/javascript',
     body: "export const SUPABASE_URL='https://test.supabase.co';export const SUPABASE_PUBLISHABLE_KEY='sb_publishable_01234567890123456789';" }));
   await context.route('https://test.supabase.co/storage/**', route => route.fulfill({ contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl2nXsAAAAASUVORK5CYII=', 'base64') }));
@@ -18,26 +18,30 @@ export async function installNewsMock(context, { records = [], authorized = true
       result = { error: null };
     } else {
       const { action, filters, orders, range, one, payload, table } = request;
-      let rows = table === 'news' ? state.rows : [];
-      if (!allowed) rows = rows.filter(row => row.status === 'published' && Date.parse(row.published_at) <= Date.now());
+      const source = table === 'news' ? state.rows : state.tables[table] || [];
+      let rows = source;
+      if (!allowed) rows = rows.filter(row => table === 'trajectory' ? row.publication_status === 'published'
+        : table === 'trajectory_matches' ? state.tables.trajectory.some(parent => parent.id === row.trajectory_id && parent.publication_status === 'published')
+        : row.status === 'published' && Date.parse(row.published_at) <= Date.now());
       rows = rows.filter(row => filters.every(([op, key, value]) => op === 'eq' ? row[key] === value : row[key] <= value));
       if (action !== 'read' && !allowed) result = { error: { code: '42501' } };
       else if (action !== 'read' && state.failWrite) result = { error: { code: '42501' } };
       else if (action === 'read' && state.failRead) result = { error: { message: 'offline' } };
       else if (action === 'insert' || action === 'update') {
         const existing = action === 'update' ? rows[0] : null;
-        if (state.rows.some(row => row.slug === payload.slug && row.id !== existing?.id)) result = { error: { code: '23505' } };
+        if (source.some(row => row.id !== existing?.id && ((table === 'news' && payload.slug && row.slug === payload.slug) || (table === 'trajectory' && payload.year && row.year === payload.year)))) result = { error: { code: '23505' } };
         else if (action === 'update' && !existing) result = { error: { code: 'PGRST116' } };
         else {
           const record = { id: randomUUID(), created_at: new Date().toISOString(), ...existing, ...payload, updated_at: new Date().toISOString() };
-          if (existing) Object.assign(existing, record); else state.rows.push(record);
+          if (existing) Object.assign(existing, record); else source.push(record);
           result = { data: record, error: null };
         }
       } else if (action === 'delete') {
-        state.rows = state.rows.filter(row => !rows.includes(row));
+        if (table === 'news') state.rows = source.filter(row => !rows.includes(row));
+        else state.tables[table] = source.filter(row => !rows.includes(row));
         result = { data: rows[0], error: rows.length ? null : { code: 'PGRST116' } };
       } else {
-        for (const [key, options] of [...orders].reverse()) rows = [...rows].sort((a, b) => String(a[key]).localeCompare(String(b[key])) * (options.ascending ? 1 : -1));
+        for (const [key, options] of [...orders].reverse()) rows = [...rows].sort((a, b) => (typeof a[key] === 'number' ? a[key] - b[key] : String(a[key]).localeCompare(String(b[key]))) * (options?.ascending === false ? -1 : 1));
         const count = rows.length;
         if (range) rows = rows.slice(range[0], range[1] + 1);
         result = { data: one ? rows[0] || null : rows, count, error: null };
