@@ -1,0 +1,101 @@
+/* SISTEMA EDITORIAL PÚBLICO — referência: assets/img/aaur-cover.jpg.
+   Carregado após os estilos de composição. Não modifica imagens ou CMS. */
+:root {
+  --color-shadow: #160c10;
+  --color-surface: #28171b;
+  --color-wine: #491c28;
+  --color-paper: #f3e6d3;
+  --color-muted: #c2aba5;
+  --color-line: #62404a;
+  --color-accent: #ed8c80;
+  --color-red: #a52e3d;
+  --font-impact: Anton, Impact, sans-serif;
+  --font-reading: Arial, Helvetica, sans-serif;
+  --font-display-xl: clamp(64px, 10vw, 144px);
+  --font-display: clamp(46px, 6vw, 76px);
+  --font-title: clamp(30px, 3.6vw, 48px);
+  --font-subtitle: clamp(22px, 2.5vw, 32px);
+  --font-card: clamp(21px, 2.2vw, 29px);
+  --font-article: clamp(30px, 4vw, 50px);
+  --font-score: clamp(36px, 4vw, 52px);
+  --font-rhyme-lead: clamp(24px, 3vw, 40px);
+  --font-rhyme: clamp(20px, 2vw, 28px);
+  --font-body: clamp(16px, 1.1vw, 18px);
+  --font-small: clamp(12px, .9vw, 14px);
+  --font-label: clamp(10px, .75vw, 12px);
+  --bg: var(--color-shadow); --panel: var(--color-surface);
+  --surface: var(--color-surface); --paper: var(--color-paper);
+  --ink: var(--color-paper); --muted: var(--color-muted);
+  --line: var(--color-line); --accent: var(--color-accent);
+  --heading: var(--font-impact); --body: var(--font-reading);
+  --news-line: var(--color-line); --news-muted: var(--color-muted);
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-reading); font-size: var(--font-body); }
+::selection { background: var(--color-paper); color: var(--color-shadow); }
+:focus-visible { outline-color: var(--color-accent); }
+h1, h2, h3 { text-wrap: balance; }
+h2 { font-size: var(--font-title); line-height: 1.12; letter-spacing: -.015em; }
+h3 { font-family: var(--font-reading); font-size: var(--font-card); line-height: 1.25; letter-spacing: -.025em; }
+.eyebrow, .journey-label, .news-category { font-size: var(--font-label); }
+.muted, .news-meta, .route-note, .match-meta { font-size: var(--font-small); }
+/* HOME — même composition, hiérarchie moins massive */
+.header.scrolled { background: #160c10f5; }
+.hero { background: var(--color-surface); }
+.hero::after { background: linear-gradient(90deg, #160c10 0%, #160c10ba 27%, transparent 65%), linear-gradient(0deg, #160c10c9, transparent 25%); }
+.hero h1 { font-size: var(--font-display-xl); line-height: 1.02; }
+.featured-copy h2, .agenda h2, .battle-copy h2, .merch-copy h2, .social-intro h2 { font-size: var(--font-title); line-height: 1.14; }
+.artist-copy h2 { font-size: var(--font-display); }
+.artist-manifest { font-size: var(--font-subtitle); line-height: 1.35; }
+.featured-copy .subtitle { font-size: var(--font-subtitle); }
+.story-main h3, .story-small h3, .record-info h3 { font-size: var(--font-card); line-height: 1.25; }
+.featured-copy > p:not(.subtitle), .story-main p, .merch-copy p, .battle-copy p, .social-intro p, .artist-copy > p:not(.artist-manifest) { font-size: var(--font-body); line-height: 1.65; }
+.battle-panel, .record-label { background: var(--color-surface); }
+.ticker, .ticker-toggle { background: var(--color-wine); color: var(--color-paper); }
+.social-links > a { font-size: var(--font-title); }
+.footer-top > a { font-size: var(--font-title); }
+.artist, .agenda { --muted: #665047; --accent: #8e2436; --line: #bba896; }
+.artist .eyebrow, .agenda .eyebrow { color: #665047; }
+/* NOTÍCIAS — manchetes longas usam a família de leitura */
+.news-page h1 { font-size: var(--font-display); line-height: 1.1; }
+.news-article h1 { font-family: var(--font-reading); font-size: var(--font-article); font-weight: 700; line-height: 1.16; max-width: 27ch; letter-spacing: -.035em; text-transform: none; }
+.news-card h2 { font-size: var(--font-card); line-height: 1.25; }
+.news-excerpt, .news-body p { font-size: var(--font-body); line-height: 1.75; color: var(--ink); }
+.news-category, .news-button { color: var(--ink); }
+.news-page p { color: var(--muted); }
+.news-body p { color: var(--ink); }
+.news-cover { background: var(--surface); }
+.skip-link { background: var(--bg); color: var(--ink); }
+/* TRAJETÓRIA — mesma jornada, escala compartilhada */
+.journey-hero h1 { font-size: var(--font-display); line-height: 1.08; }
+.journey-section h2 { font-size: var(--font-title); line-height: 1.14; }
+.journey-subtitle { font-size: var(--font-body); line-height: 1.6; }
+.journey-match { background: var(--surface); }
+.score-value { font-size: var(--font-score); }
+.route-current { background: var(--color-wine); color: var(--ink); border-color: var(--color-accent); }
+.route-current .route-number, .route-current p { color: var(--color-paper); }
+.route-current-label { border-color: var(--color-accent); }
+.route-number, .route-step p { color: var(--muted); }
+.hero-status { border-color: var(--color-accent); }
+.journey-result { background: var(--color-wine); color: var(--ink); border-left-color: var(--color-red); }
+.journey-result .journey-label { color: var(--muted); }
+.journey-result h2, .journey-next h2 { font-size: var(--font-display); }
+.result-competition { font-size: var(--font-subtitle); }
+.journey-footer, .journey-header { border-color: var(--line); }
+/* RIMAS — sans lisible, largeur généreuse, aucune coupure forcée */
+.journey-rhymes > h2 { font-family: var(--font-reading); font-size: var(--font-title); font-weight: 700; text-transform: none; max-width: 26ch; letter-spacing: -.035em; }
+.rhymes-composition { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
+.rhyme { padding-block: 32px; }
+.rhyme blockquote p { font-family: var(--font-reading); font-size: var(--font-rhyme); line-height: 1.4; font-weight: 500; letter-spacing: -.025em; max-width: 36ch; }
+.rhyme-lead { padding-right: clamp(28px, 4vw, 56px); }
+.rhyme-lead blockquote p { font-family: var(--font-reading); font-size: var(--font-rhyme-lead); line-height: 1.15; font-weight: 500; letter-spacing: -.03em; max-width: 34ch; }
+.rhyme-lead figcaption { margin-top: 32px; }
+.rhyme-index { color: var(--accent); }
+.rhyme:last-child { background: var(--color-wine); }
+@media (max-width: 700px) {
+  .hero::after { background: linear-gradient(0deg, #160c10 0%, #160c100a 55%, #160c10aa 100%); }
+  .hero h1 { font-size: clamp(64px, 18vw, 110px); }
+  .rhymes-composition { grid-template-columns: 1fr; }
+  .rhyme-lead { padding-right: 0; }
+  .rhyme-lead blockquote p { line-height: 1.3; max-width: 34ch; }
+  .rhyme { padding-block: 26px; }
+}
