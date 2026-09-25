@@ -48,6 +48,18 @@ test('migration: permissões reais de PostgreSQL para visitante, usuário comum 
     await role('authenticated', admin);
     for (const sql of Object.values(statements)) await db.exec(sql);
     await assert.rejects(db.exec(statements.news), /duplicate key/i);
+    await db.exec('reset role');
+    const beforeCredit = (await db.query('select * from public.news')).rows[0];
+    const migration = await readFile(new URL('../supabase/migrations/202609250001_news_image_credit.sql', import.meta.url), 'utf8');
+    await db.exec(migration);
+    await db.exec(migration);
+    const afterCredit = (await db.query('select * from public.news')).rows[0];
+    assert.equal(afterCredit.image_credit, null);
+    delete afterCredit.image_credit;
+    assert.deepEqual(afterCredit, beforeCredit, 'Migration preserva notícia antiga');
+    await role('authenticated', admin);
+    await db.exec("update public.news set image_credit='Foto: Central'");
+
     assert.equal((await db.query('select role from public.profiles')).rows[0].role, 'admin', 'Admin legado migrado');
     const trajectoryId = (await db.query('select id from public.trajectory')).rows[0].id;
     await db.query("insert into public.trajectory_matches(trajectory_id,competition) values ($1,'Liga')", [trajectoryId]);
@@ -75,6 +87,7 @@ test('migration: permissões reais de PostgreSQL para visitante, usuário comum 
     await db.exec("update public.news set published_at=now()-interval '1 minute'");
     await role('authenticated', common);
     assert.equal(await count('news'), 1);
+    assert.equal((await db.query('select image_credit from public.news')).rows[0].image_credit, 'Foto: Central');
     assert.equal((await db.query("update public.news set title='Invadido' returning id")).rows.length, 0);
     assert.equal((await db.query('delete from public.events returning id')).rows.length, 0);
     assert.equal((await db.query('delete from public.trajectory_matches returning id')).rows.length, 0);

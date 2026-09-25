@@ -28,6 +28,7 @@ async function initHomeNews() {
       if (cta) cta.textContent = 'Ler notícia ↗';
       const image = slot.querySelector('img');
       if (image) {
+        image.hidden = false; // Inclui o slot editorial que aguarda a capa oficial do EP.
         const fallback = new URL('../../assets/img/central-logo.jpg', import.meta.url).href;
         image.addEventListener('error', () => { image.src = fallback; }, { once: true });
         image.removeAttribute('srcset');

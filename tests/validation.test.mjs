@@ -68,3 +68,14 @@ test('upload recusa SVG, arquivo vazio, excesso e assinatura falsa; delete é re
   await assert.rejects(removeImage({}, '../../outro-arquivo'));
 });
 
+
+test('crédito opcional aceita texto, limpa espaços e permite remoção', () => {
+  const data = news();
+  assert.equal(newsPayload(data).image_credit, null);
+  data.set('image_credit', '  Foto: João Silva  ');
+  assert.equal(newsPayload(data).image_credit, 'Foto: João Silva');
+  data.set('image_credit', '   ');
+  assert.equal(newsPayload(data).image_credit, null);
+  data.set('image_credit', 'x'.repeat(501));
+  assert.throws(() => newsPayload(data));
+});

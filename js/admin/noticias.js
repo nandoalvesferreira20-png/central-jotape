@@ -18,6 +18,7 @@ export function newsPayload(formData, now = new Date()) {
     excerpt: optional(formData.get('excerpt'), 500),
     content: required(formData.get('content'), 'Conteúdo', 100000),
     cover_url: httpsUrl(formData.get('cover_url')),
+    image_credit: optional(formData.get('image_credit'), 500),
     category: required(formData.get('category'), 'Categoria', 80),
     status, featured: formData.get('featured') === 'on',
     author_name: required(formData.get('author_name'), 'Autor', 120),

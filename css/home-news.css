@@ -5,3 +5,7 @@
 #central[data-news-loaded] h3,
 #central[data-news-loaded] .eyebrow,
 #central[data-news-loaded] .story-main p { overflow-wrap: anywhere; }
+
+/* Capa oficial pendente: ocultar a imagem até o asset ser fornecido.
+   Notícias do CMS reativam a imagem ao preencher o slot editorial. */
+.featured img[hidden], .track-row img[hidden], .story-small img[hidden] { display: none; }

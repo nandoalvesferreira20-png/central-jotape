@@ -23,7 +23,14 @@ export function articleContent(record, { heading = 'h1' } = {}) {
   article.append(node('p', record.category, 'news-category'), node(heading, record.title));
   if (record.excerpt) article.append(node('p', record.excerpt, 'news-excerpt'));
   article.append(node('p', 'Por ' + record.author_name + ' · ' + newsDate(record.published_at), 'news-meta'));
-  if (record.cover_url) article.append(cover(record));
+  if (record.cover_url) {
+    const credit = String(record.image_credit || '').trim();
+    if (credit) {
+      const figure = node('figure', undefined, 'news-image');
+      figure.append(cover(record), node('figcaption', credit, 'news-image-credit'));
+      article.append(figure);
+    } else article.append(cover(record));
+  }
   const content = node('div', undefined, 'news-body');
   String(record.content || '').split(/\r?\n\s*\r?\n/).filter(Boolean)
     .forEach(paragraph => content.append(node('p', paragraph)));

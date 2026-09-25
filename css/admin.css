@@ -110,3 +110,8 @@ noscript p { margin: 24px; }
 .news-preview .news-meta { color: var(--muted); }
 .record { flex-wrap: wrap; }
 .record .actions { flex-shrink: 1; }
+
+/* Crédito da imagem na prévia editorial. */
+.news-preview .news-image { margin: 22px 0; }
+.news-preview .news-image .news-cover { margin: 0; }
+.news-preview .news-image-credit { margin-top: 10px; font-size: 12px; line-height: 1.5; color: var(--muted); }

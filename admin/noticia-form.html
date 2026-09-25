@@ -65,6 +65,11 @@
   <input id="cover_url" name="cover_url" type="url" maxlength="2000">
   
 </div>
+<div class="field full">
+  <label for="image_credit">Crédito da imagem</label>
+  <input id="image_credit" name="image_credit" type="text" maxlength="500" aria-describedby="image-credit-help">
+  <span class="help" id="image-credit-help">Nome do fotógrafo, veículo ou fonte da imagem.</span>
+</div>
 <div class="upload full"><label for="upload-cover_url">Enviar imagem para a mídia pública</label><input id="upload-cover_url" type="file" accept="image/jpeg,image/png,image/webp,image/avif" data-upload="cover_url"><span class="help">JPEG, PNG, WebP ou AVIF. Até 5 MB. Arquivos enviados são públicos, inclusive em rascunhos.</span><button type="button" class="secondary" data-upload-button>Enviar imagem</button><img class="cover-preview" data-cover-preview alt="Prévia da capa selecionada" hidden><p class="help" role="status" data-upload-status></p></div>
 </div><div class="actions form-actions"><button type="submit" name="action" value="draft" class="secondary">Salvar rascunho</button><button type="submit" name="action" value="published">Publicar</button><button type="button" class="secondary" data-preview>Visualizar</button><button type="button" class="secondary" data-cancel>Cancelar</button></div></fieldset></form>
       </main>

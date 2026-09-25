@@ -36,3 +36,8 @@ body > header, body > footer { max-width: 1200px; }
   body > header nav { gap: 16px; font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .news-read { transition: none; } }
+
+/* Crédito opcional: ausente, a imagem mantém seu espaçamento original. */
+.news-image { margin: 32px 0; }
+.news-article .news-image .news-cover { margin: 0; }
+.news-image-credit { margin-top: 10px; color: var(--news-muted); font-size: clamp(12px, 1vw, 13px); line-height: 1.5; overflow-wrap: anywhere; }

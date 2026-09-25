@@ -214,6 +214,7 @@ test('home filtra destaque, rascunho, data futura e data nula; limita e abre slu
   await page.goto('/');
   await expect(page.locator('#central .story-main h3')).toHaveText('Notícia 4');
   await expect(page.locator('#central .story-small h3')).toHaveText(['Notícia 3', 'Notícia 2']);
+  await expect(page.locator('#central .story-small img').first()).toBeVisible();
   const links = page.locator('#central .story-main a, #central .story-small a');
   await expect(links).toHaveCount(3);
   for (let i = 0; i < 3; i++) await expect(links.nth(i)).toHaveAttribute('href', 'noticia.html?slug=noticia-' + (4 - i));
@@ -249,3 +250,56 @@ test('home remove despublicação e preserva conteúdo original sem destaques ou
     await expect(page.locator('#central')).not.toHaveAttribute('data-news-loaded', 'true');
   }
 });
+
+
+test('crédito: criar, recarregar, editar, exibir com segurança e remover', async ({ page, context }) => {
+  const state = await installNewsMock(context);
+  await login(page);
+  await page.goto('/admin/noticia-form.html');
+  await fillNews(page);
+  await page.locator('#cover_url').fill('https://test.supabase.co/storage/capa.png');
+  await page.getByLabel('Crédito da imagem', { exact: true }).fill('Foto: João Silva');
+  await page.getByRole('button', { name: 'Publicar', exact: true }).click();
+  await expect(page.locator('[data-message]')).toContainText('Notícia publicada');
+  expect(state.rows[0].image_credit).toBe('Foto: João Silva');
+  await page.reload();
+  await expect(page.locator('#image_credit')).toHaveValue('Foto: João Silva');
+  await page.locator('#image_credit').fill('Crédito: <img src=x onerror=alert(1)>');
+  await page.getByRole('button', { name: 'Publicar', exact: true }).click();
+  await expect(page.locator('[data-message]')).toContainText('Notícia publicada');
+  const publicPage = await context.newPage();
+  await publicPage.goto('/noticia.html?slug=vozes-da-central');
+  await expect(publicPage.locator('figcaption')).toHaveText('Crédito: <img src=x onerror=alert(1)>');
+  await expect(publicPage.locator('figcaption img')).toHaveCount(0);
+  const image = await publicPage.locator('.news-image img').boundingBox();
+  const caption = await publicPage.locator('figcaption').boundingBox();
+  expect(caption.y).toBeGreaterThanOrEqual(image.y + image.height);
+  await page.locator('#image_credit').fill('');
+  await page.getByRole('button', { name: 'Publicar', exact: true }).click();
+  await expect(page.locator('[data-message]')).toContainText('Notícia publicada');
+  expect(state.rows[0].image_credit).toBeNull();
+  await publicPage.reload();
+  await expect(publicPage.locator('.news-article > .news-cover')).toBeVisible();
+  await expect(publicPage.locator('.news-image, figcaption')).toHaveCount(0);
+  delete state.rows[0].image_credit;
+  await publicPage.reload();
+  await expect(publicPage.locator('.news-article > .news-cover')).toBeVisible();
+  await expect(publicPage.locator('figcaption')).toHaveCount(0);
+});
+
+for (const width of [375, 390, 430, 768, 1024, 1440]) {
+  test('novo EP e crédito em ' + width + 'px', async ({ page, context }, testInfo) => {
+    await installNewsMock(context, { records: [{ ...record(1), featured: false, cover_url: 'https://test.supabase.co/storage/capa.png', image_credit: 'Foto: João Silva / Central' }] });
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('#destaque img')).toBeHidden();
+    await expect(page.locator('#featured-title')).toHaveText('ENTRE PRAÇAS, PAPÉIS E PASTÉIS DE NATA');
+    await expect(page.locator('a[href="https://www.youtube.com/playlist?list=OLAK5uy_nS_Tahace_x4UOiPGky-GZSWduPlLXhjk"]')).toHaveCount(4);
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.locator('#destaque').scrollIntoViewIfNeeded();
+    await page.locator('#destaque').screenshot({ path: testInfo.outputPath('ep.png'), animations: 'disabled' });
+    await page.goto('/noticia.html?slug=noticia-1');
+    await expect(page.locator('figcaption')).toHaveText('Foto: João Silva / Central');
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  });
+}

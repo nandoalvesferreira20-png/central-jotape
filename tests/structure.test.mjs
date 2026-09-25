@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 
 test('estrutura da landing preservada com integrações e sistema visual autorizado', async () => {
   const expected = {
-    'index.html': '750247e443760148cf4289030a9768b37a4858aaa5f3eda4b8668fde05851516',
+    'index.html': '1c0d8b1325785c641df23811314ca2b559aa144335df4b1c3378ffe7bc6c356b',
     'css/style.css': 'ce375d966ed699d4d5677ffc63df5d44327347b383a51001f3fe1b4ec4cb5a70',
     'js/main.js': 'e7d333f31bbf69d3a8924952bb0c59353cddd43dbbfc52cdf937eeeb7c22d7bf',
   };
