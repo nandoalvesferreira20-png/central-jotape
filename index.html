@@ -32,6 +32,8 @@
   <meta name="twitter:image:alt" content="Central Jotapê MC">
   <link rel="canonical" href="https://central-jotape.vercel.app/">
   <meta property="og:url" content="https://central-jotape.vercel.app/">
+    <link rel="stylesheet" href="css/home-stats.css">
+    <script src="js/home-stats.js" defer></script>
 </head>
   <body>
     <a class="skip-link" href="#principal">
@@ -552,57 +554,32 @@
         </div>
       </aside>
       <!-- trajectory-teaser:end -->
-      <section class="trajectory wrap" aria-labelledby="trajectory-title">
-        <div class="section-heading">
-          <h2 class="eyebrow" id="trajectory-title">
-            UMA TRAJETÓRIA EM CONSTRUÇÃO
-          </h2>
-          <span class="muted">
-            Números aguardando validação oficial.
-          </span>
-        </div>
-        <div class="stats">
-          <!-- Adicionar data-value numérico e data-suffix após validação. Vazio nunca representa zero. -->
-          <div>
-            <strong data-value="" data-suffix="">
-              —
-            </strong>
-            <span>
-              Batalhas
-            </span>
+      <section class="artist-facts wrap" aria-labelledby="artist-facts-title">
+        <h2 class="eyebrow" id="artist-facts-title">JOTAPÊ / ENTRE RIMAS E CONQUISTAS</h2>
+        <div class="artist-facts-grid">
+          <div class="artist-fact">
+            <strong class="fact-value">3x</strong>
+            <span class="fact-label">CAMPEÃO BDA ANIVERSÁRIO</span>
+            <button class="fact-detail" id="titles-trigger" type="button" aria-expanded="false" aria-controls="titles-popover">Principais títulos <span aria-hidden="true">↗</span></button>
+            <div class="titles-popover" id="titles-popover" popover="auto" role="region" aria-labelledby="titles-heading">
+              <div class="titles-heading"><h3 id="titles-heading">Principais títulos</h3><button type="button" data-titles-close aria-label="Fechar títulos">×</button></div>
+              <ul>
+                <li><span>2021</span> BDA 5 Anos</li>
+                <li><span>2023</span> BDA 7 Anos</li>
+                <li><span>2023</span> Mar de Monstros — Armagedom</li>
+                <li><span>2023</span> Norte Ragnarok</li>
+                <li><span>2024</span> Interestadual da Aldeia</li>
+                <li><span>2024</span> FMS Brasil</li>
+                <li><span>2025</span> Jardim das Rimas</li>
+                <li><span>2025</span> Norte Sparta</li>
+                <li><span>2026</span> BDA 10 Anos</li>
+              </ul>
+              <div class="titles-mvp"><p>MVP — BDA 7 Anos</p><p>MVP — BDA 10 Anos</p></div>
+            </div>
           </div>
-          <div>
-            <strong data-value="" data-suffix="">
-              —
-            </strong>
-            <span>
-              Visualizações
-            </span>
-          </div>
-          <div>
-            <strong data-value="" data-suffix="">
-              —
-            </strong>
-            <span>
-              Streams
-            </span>
-          </div>
-          <div>
-            <strong data-value="" data-suffix="">
-              —
-            </strong>
-            <span>
-              Shows
-            </span>
-          </div>
-          <div>
-            <strong data-value="" data-suffix="">
-              —
-            </strong>
-            <span>
-              Seguidores
-            </span>
-          </div>
+          <div class="artist-fact"><strong class="fact-value">847,3 MIL</strong><span class="fact-label">OUVINTES MENSAIS</span><span class="fact-context">Spotify</span></div>
+          <div class="artist-fact"><strong class="fact-value">1,27 MI</strong><span class="fact-label">SEGUIDORES</span><span class="fact-context">@jotape4real</span></div>
+          <div class="artist-fact"><strong class="fact-value">2026</strong><span class="fact-label">RUMO AO NACIONAL</span><a class="fact-context fact-journey" href="trajetoria-2026.html">Classificado para o Regional <span aria-hidden="true">↗</span></a></div>
         </div>
       </section>
       <section class="merch section wrap" id="merch" aria-labelledby="merch-title">

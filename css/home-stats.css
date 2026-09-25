@@ -1,0 +1,35 @@
+/* Faixa editorial exclusiva da home. Valores fornecidos pela Central. */
+.artist-facts { padding-block: clamp(38px, 5vw, 64px); }
+.artist-facts > .eyebrow { margin-bottom: 26px; font-size: var(--font-label); color: var(--muted); }
+.artist-facts-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+.artist-fact { min-width: 0; padding: 30px clamp(16px, 2.3vw, 32px); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.artist-fact + .artist-fact { border-left: 1px solid var(--line); }
+.fact-value { font: 400 clamp(30px, 3.2vw, 45px)/1.1 var(--font-impact); letter-spacing: -.02em; white-space: nowrap; }
+.fact-label { font-size: clamp(10px, .8vw, 12px); line-height: 1.5; letter-spacing: .08em; font-weight: 700; }
+.fact-context, .fact-detail { font: 400 12px/1.5 var(--font-reading); color: var(--muted); }
+.fact-detail { border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 8px 0; min-height: 44px; cursor: pointer; text-align: left; }
+.fact-detail span { margin-left: 7px; }
+.fact-detail:hover, .fact-detail[aria-expanded="true"], .fact-journey:hover { color: var(--ink); }
+.fact-journey { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.titles-popover { position: fixed; inset: auto; margin: 0; width: min(370px, calc(100vw - 24px)); max-height: min(460px, calc(100svh - 24px)); overflow-y: auto; padding: 20px; border: 1px solid var(--line); background: var(--color-wine); color: var(--ink); box-shadow: 0 10px 30px #0003; }
+.titles-popover:popover-open { animation: titles-in .16s ease-out; }
+.titles-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.titles-heading h3 { font: 700 15px/1.3 var(--font-reading); letter-spacing: -.01em; }
+.titles-heading button { flex-shrink: 0; width: 36px; height: 36px; padding: 0; font-size: 22px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.titles-popover ul { list-style: none; margin: 0; padding: 0; }
+.titles-popover li { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 12px; padding-block: 5px; font: 400 12px/1.5 var(--font-reading); }
+.titles-popover li > span { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.titles-mvp { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; font-size: 11px; line-height: 1.7; letter-spacing: .03em; }
+@keyframes titles-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1000px) {
+  .artist-facts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .artist-fact:nth-child(3) { border-left: 0; }
+  .artist-fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 480px) {
+  .artist-fact { padding: 24px 12px; }
+  .fact-value { font-size: clamp(28px, 8vw, 34px); }
+  .fact-label { letter-spacing: .04em; }
+  .fact-context, .fact-detail { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) { .titles-popover:popover-open { animation: none; } }
