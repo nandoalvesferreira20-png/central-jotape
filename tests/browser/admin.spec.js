@@ -83,7 +83,7 @@ test('usuário autenticado comum não recebe painel', async ({ page }) => {
 test('login, erro amigável, proteção de retorno e logout', async ({ page }) => {
   await mockSupabase(page);
   await page.goto('/admin/login.html?next=https://evil.test');
-  await page.getByLabel('E-mail').fill('editor@example.test');
+  await page.getByLabel('E-mail', { exact: true }).fill('editor@example.test');
   await page.getByLabel('Senha', { exact: true }).fill('errada');
   await page.getByRole('button', { name: 'Entrar no painel' }).click();
   await expect(page.locator('[data-message]')).toContainText('Não foi possível entrar');

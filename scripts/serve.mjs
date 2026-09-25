@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const publicDirectories = new Set(['admin', 'assets', 'css', 'js', 'config']);
-const publicPages = new Set(['index.html', 'noticias.html', 'noticia.html', 'trajetoria-2026.html']);
-const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml', '.ttf': 'font/ttf' };
+const publicPages = new Set(['index.html', 'galeria.html', 'noticias.html', 'noticia.html', 'trajetoria-2026.html']);
+const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml', '.ttf': 'font/ttf' };
 export function createDevServer() {
   return http.createServer(async (req, res) => {
   try {

@@ -11,7 +11,7 @@ test('estrutura da landing preservada com integrações e sistema visual autoriz
   };
   for (const [file, hash] of Object.entries(expected)) {
     let source = await readFile(new URL('../' + file, import.meta.url));
-    if (file === 'index.html') source = Buffer.from(source.toString().replace(/    <link rel="stylesheet" href="css\/editorial-system.css">\r?\n/, '').replace(/      <!-- trajectory-teaser:start -->[\s\S]*?      <!-- trajectory-teaser:end -->\n/, '').replace(/    <link rel="stylesheet" href="css\/home-news.css">\r?\n/, '').replace(/    <script type="module" src="js\/public\/home-news.js"><\/script>\r?\n/, ''));
+    if (file === 'index.html') source = Buffer.from(source.toString().replace(/    <link rel="stylesheet" href="css\/galeria.css">\r?\n/, '').replace(/        <!-- gallery-nav:start -->.*<!-- gallery-nav:end -->\r?\n/, '').replace(/      <!-- gallery-teaser:start -->[\s\S]*?      <!-- gallery-teaser:end -->\r?\n/, '').replace(/    <link rel="stylesheet" href="css\/editorial-system.css">\r?\n/, '').replace(/      <!-- trajectory-teaser:start -->[\s\S]*?      <!-- trajectory-teaser:end -->\n/, '').replace(/    <link rel="stylesheet" href="css\/home-news.css">\r?\n/, '').replace(/    <script type="module" src="js\/public\/home-news.js"><\/script>\r?\n/, ''));
     const actual = createHash('sha256').update(source).digest('hex');
     assert.equal(actual, hash, file + ' alterado');
   }
@@ -22,7 +22,7 @@ test('páginas administrativas não contêm lógica inline nem importam main.js'
     assert.ok(!/\son\w+=|<style\b|\sstyle=/i.test(html));
     assert.ok(!html.includes('js/main.js'));
     assert.ok(/<script type="module" src="[^"]+"><\/script>/.test(html));
-    if (file !== 'login.html') assert.ok(/data-admin-content hidden/.test(html));
+    if (!['login.html', 'reset-password.html'].includes(file)) assert.ok(/data-admin-content hidden/.test(html));
     assert.ok(html.includes('noindex, nofollow'));
   }
 });

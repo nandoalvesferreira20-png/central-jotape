@@ -106,12 +106,43 @@ export async function initLogin() {
     return;
   }
   form.querySelector('fieldset').disabled = false;
+  const recoveryForm = document.querySelector('#recovery-form');
+  recoveryForm.querySelector('fieldset').disabled = false;
+  const recoveryMessage = document.querySelector('[data-recovery-message]');
+  if (location.hash === '#recovery') document.querySelector('#recovery').open = true;
+  let sendingRecovery = false;
+  recoveryForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (sendingRecovery || !recoveryForm.reportValidity()) return;
+    const email = recoveryForm.elements.email.value.trim();
+    sendingRecovery = true;
+    await withBusy(recoveryForm, async () => {
+      message('Enviando link…', false, recoveryMessage);
+      try {
+        const redirectTo = window.location.origin + '/admin/reset-password.html';
+        const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
+        message('Se houver uma conta com esse e-mail, você receberá um link de redefinição. Confira também o spam.', false, recoveryMessage);
+      } catch {
+        message('Não foi possível enviar o link. Aguarde alguns minutos e tente novamente.', true, recoveryMessage);
+      } finally { sendingRecovery = false; }
+    });
+  });
+  const loginParams = new URLSearchParams(location.search);
+  const resetSuccess = loginParams.get('reset') === 'success';
+  if (loginParams.has('reset')) {
+    loginParams.delete('reset');
+    history.replaceState(null, '', location.pathname + (loginParams.size ? '?' + loginParams : '') + location.hash);
+  }
   const reason = new URLSearchParams(location.search).get('reason');
-  if (reason === 'denied') message('Esta conta não está autorizada a acessar o painel.', true);
+  if (resetSuccess) message('Senha atualizada. Entre com sua nova senha.');
+  else if (reason === 'denied') message('Esta conta não está autorizada a acessar o painel.', true);
   else if (reason === 'session') message('Entre para continuar. Sua sessão pode ter expirado.');
   else message('Use a conta autorizada pela administração da Central.');
   const next = safeDestination(new URLSearchParams(location.search).get('next'));
-  try { await verifyAdmin(client); location.replace(next); return; } catch { /* Exibir login. */ }
+  if (!resetSuccess && location.hash !== '#recovery') {
+    try { await verifyAdmin(client); location.replace(next); return; } catch { /* Exibir login. */ }
+  }
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity()) return;

@@ -12,7 +12,7 @@ const stat = await lstat(output).catch(error => { if (error.code !== 'ENOENT') t
 if (stat?.isSymbolicLink()) throw new Error('dist não pode ser um link simbólico.');
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
-const publicFiles = ['index.html', 'noticias.html', 'noticia.html', 'trajetoria-2026.html', 'admin', 'assets', 'css', 'js'];
+const publicFiles = ['index.html', 'galeria.html', 'noticias.html', 'noticia.html', 'trajetoria-2026.html', 'admin', 'assets', 'css', 'js'];
 for (const name of publicFiles) await cp(path.join(root, name), path.join(output, name), { recursive: true });
 await mkdir(path.join(output, 'config'));
 await writeFile(path.join(output, 'config/supabase-config.js'),

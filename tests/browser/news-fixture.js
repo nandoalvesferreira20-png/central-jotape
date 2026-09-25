@@ -91,7 +91,7 @@ export async function installNewsMock(context, { records = [], authorized = true
 }
 export async function login(page) {
   await page.goto('/admin/login.html');
-  await page.getByLabel('E-mail').fill('editor@example.test');
+  await page.getByLabel('E-mail', { exact: true }).fill('editor@example.test');
   await page.getByLabel('Senha', { exact: true }).fill('senha-de-teste');
   await page.getByRole('button', { name: 'Entrar no painel' }).click();
   await page.waitForURL('**/admin/index.html');

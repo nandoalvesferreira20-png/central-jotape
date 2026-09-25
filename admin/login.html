@@ -23,9 +23,20 @@
           <button type="submit">Entrar no painel</button>
         </fieldset>
       </form>
+      <details id="recovery">
+        <summary>Esqueci minha senha</summary>
+        <p class="help">Informe seu e-mail para receber um link de redefinição.</p>
+        <p class="notice" data-recovery-message role="status" aria-live="polite"></p>
+        <form id="recovery-form">
+          <fieldset disabled>
+            <div class="field"><label for="recovery-email">E-mail de recuperação</label><input id="recovery-email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
+            <button type="submit">Enviar link de recuperação</button>
+          </fieldset>
+        </form>
+      </details>
       <noscript><p>Ative o JavaScript para entrar.</p></noscript>
     </section>
-    <p class="help">Acesso restrito a contas autorizadas. Para liberação ou recuperação de acesso, procure o responsável pela Central.</p>
+    <p class="help">Acesso restrito a contas autorizadas. Para liberação de acesso, procure o responsável pela Central.</p>
     <a href="../index.html">← Voltar ao site</a>
   </main>
 </body>
