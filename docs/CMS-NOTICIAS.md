@@ -100,7 +100,7 @@ Para Vercel, as mesmas variáveis públicas entram no ambiente de build. `npm ru
 - Prévia de rascunho é privada dentro do painel; o link público de rascunho retorna “Notícia não encontrada”.
 - Cancelar tenta limpar uploads desta edição; salvar remove os não utilizados e mantém a capa escolhida. Fechamento abrupto/perda de rede pode deixar órfãos. Capas já salvas e imagens de notícia excluída não são apagadas automaticamente, para preservar possíveis referências compartilhadas.
 - Conteúdo é texto simples, sem HTML/editor enriquecido/imagens no corpo. Não há dados editoriais reais inseridos nesta fase.
-- Título e descrição de notícia atualizam no navegador; metadados sociais individuais no servidor ficam para outra etapa. `noindex, nofollow` permanece por se tratar de demonstração.
+- Título e descrição de notícia atualizam no navegador; metadados sociais individuais no servidor ficam para outra etapa. Na entrega oficial, as páginas públicas permitem indexação; o painel continua fora dos buscadores.
 - Cadastro/recuperação de senha, hierarquia editorial granular, revisão/aprovação e controle de alterações concorrentes continuam fora do escopo. Admin e editor têm as mesmas permissões editoriais nesta etapa.
 
 ## Imagens e conteúdo pendentes

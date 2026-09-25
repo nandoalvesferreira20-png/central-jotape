@@ -212,7 +212,7 @@ A sincronização acontece em cada carregamento/consulta, sem copiar HTML manual
 
 ## 9. Próximas etapas
 
-- SEO social por notícia no servidor/prerender: título e descrição mudam no navegador, mas crawlers que não executam JS não recebem metadados individuais. A demonstração continua com `noindex, nofollow`.
+- SEO social por notícia no servidor/prerender: título e descrição mudam no navegador, mas crawlers que não executam JS não recebem metadados individuais. As páginas públicas permitem indexação; o painel continua fora dos buscadores.
 - Desenvolver o design público da trajetória depois de aprovação específica.
 - Editor enriquecido e mídia dentro do corpo (hoje é texto simples).
 - Fluxo dedicado de convite/recuperação de senha, MFA e gestão de administradores, se desejados.
