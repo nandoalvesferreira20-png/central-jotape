@@ -1,7 +1,7 @@
 // Backend em memória EXCLUSIVO DOS TESTES. Nenhum mock é importado pelo site.
 import { randomUUID } from 'node:crypto';
-export async function installNewsMock(context, { records = [], authorized = true, trajectories = [], matches = [] } = {}) {
-  const state = { tables: { trajectory: structuredClone(trajectories), trajectory_matches: structuredClone(matches) }, rows: structuredClone(records), files: new Map(), failRead: false, failUpload: false, failWrite: false };
+export async function installNewsMock(context, { records = [], authorized = true, trajectories = [], matches = [], gallery = [] } = {}) {
+  const state = { tables: { gallery_items: structuredClone(gallery), trajectory: structuredClone(trajectories), trajectory_matches: structuredClone(matches) }, rows: structuredClone(records), files: new Map(), failRead: false, failUpload: false, failWrite: false, failRemove: false };
   await context.route('**/config/supabase-config.js', route => route.fulfill({ contentType: 'text/javascript',
     body: "export const SUPABASE_URL='https://test.supabase.co';export const SUPABASE_PUBLISHABLE_KEY='sb_publishable_01234567890123456789';" }));
   await context.route('https://test.supabase.co/storage/**', route => route.fulfill({ contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl2nXsAAAAASUVORK5CYII=', 'base64') }));
@@ -14,13 +14,13 @@ export async function installNewsMock(context, { records = [], authorized = true
       if (!allowed || state.failUpload) result = { error: { code: '42501' } };
       else { state.files.set(request.path, true); result = { data: { path: request.path }, error: null }; }
     } else if (request.type === 'remove') {
-      request.paths.forEach(path => state.files.delete(path));
-      result = { error: null };
+      if (!allowed || state.failRemove) result = { error: { code: '42501' } };
+      else { request.paths.forEach(path => state.files.delete(path)); result = { error: null }; }
     } else {
       const { action, filters, orders, range, one, payload, table } = request;
       const source = table === 'news' ? state.rows : state.tables[table] || [];
       let rows = source;
-      if (!allowed) rows = rows.filter(row => table === 'trajectory' ? row.publication_status === 'published'
+      if (!allowed) rows = rows.filter(row => ['trajectory', 'gallery_items'].includes(table) ? row.publication_status === 'published'
         : table === 'trajectory_matches' ? state.tables.trajectory.some(parent => parent.id === row.trajectory_id && parent.publication_status === 'published')
         : row.status === 'published' && Date.parse(row.published_at) <= Date.now());
       rows = rows.filter(row => filters.every(([op, key, value]) => op === 'eq' ? row[key] === value : row[key] <= value));
@@ -77,6 +77,7 @@ export async function installNewsMock(context, { records = [], authorized = true
             lte(key,value) {q.filters.push(['lte',key,value]);return this;},
             order(key,options) {q.orders.push([key,options]);return this;},
             range(a,b) {q.range=[a,b];return this;},
+            limit(n) {q.range=[0,n-1];return this;},
             single() {q.one=true;return this;}, maybeSingle() {q.one=true;return this;},
             insert(payload) {q.action='insert';q.payload=payload;return this;},
             update(payload) {q.action='update';q.payload=payload;return this;},

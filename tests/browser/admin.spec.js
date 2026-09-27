@@ -57,7 +57,7 @@ async function mockSupabase(page, { session = false, admin = true, rows = [] } =
     `,
   }));
 }
-const routes = ['index.html', 'noticias.html', 'noticia-form.html', 'agenda.html', 'trajetoria.html'];
+const routes = ['index.html', 'noticias.html', 'noticia-form.html', 'agenda.html', 'trajetoria.html', 'galeria.html'];
 test('configuração ausente bloqueia painel e mantém landing pública', async ({ page }) => {
   await page.route('**/config/supabase-config.js', route => route.fulfill({ contentType: 'text/javascript', body: "export const SUPABASE_URL=''; export const SUPABASE_PUBLISHABLE_KEY='';" }));
   await page.goto('/admin/');

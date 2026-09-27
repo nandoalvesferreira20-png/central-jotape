@@ -1,8 +1,10 @@
+(() => {
+
 // Prévia independente da home: rolagem nativa para swipe e foco por teclado.
 function initHomeGallery() {
   const strip = document.querySelector('.gallery-teaser-photos');
   if (!strip) return;
-  const photos = [...strip.querySelectorAll('a')];
+  let photos = [...strip.querySelectorAll('a')];
   const controls = document.querySelector('.gallery-teaser-controls');
   let selected = 0;
   let settleTimer;
@@ -30,5 +32,24 @@ function initHomeGallery() {
       move(event.key === 'ArrowLeft' ? -1 : 1);
     }
   });
+  import('./public/gallery-service.js').then(module => module.loadPublishedGallery(3)).then(published => {
+    if (!Array.isArray(published) || !published.length) return;
+    clearTimeout(settleTimer);
+    const restoreFocus = strip.contains(document.activeElement) && document.activeElement !== strip;
+    strip.replaceChildren(...published.map(photo => {
+      const link = document.createElement('a');
+      link.href = 'galeria.html';
+      const image = document.createElement('img');
+      Object.assign(image, { src: photo.src, alt: photo.alt, loading: 'lazy', decoding: 'async' });
+      link.append(image);
+      return link;
+    }));
+    photos = [...strip.querySelectorAll('a')];
+    selected = 0;
+    strip.scrollTo({ left: 0, behavior: 'instant' });
+    if (restoreFocus) photos[0].focus({ preventScroll: true });
+  }).catch(() => { /* Preservar fotos locais e navegação. */ });
 }
 initHomeGallery();
+
+})();

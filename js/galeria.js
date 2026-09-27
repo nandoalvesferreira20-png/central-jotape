@@ -1,6 +1,24 @@
+(() => {
+// Texto simples: legenda editorial nunca substitui o alt e crédito não recebe prefixo.
+function renderGalleryDetails(container, photo) {
+  container.replaceChildren();
+  if (photo.caption?.trim()) {
+    const text = document.createElement('p');
+    text.textContent = photo.caption;
+    container.append(text);
+  }
+  if (photo.image_credit?.trim()) {
+    const credit = document.createElement('p');
+    credit.className = 'gallery-photo-credit';
+    credit.textContent = photo.image_credit;
+    container.append(credit);
+  }
+  container.hidden = !container.childElementCount;
+}
+
 /* Acrescente fotos locais aqui. Preserve nomes, dimensões e alt descritivo.
    A ordem define a composição; o primeiro registro ocupa o destaque. */
-const galleryImages = [
+const fallbackImages = [
   { src: 'assets/img/galeria/IMG_7308.JPG.jpeg', alt: 'Jotapê em retrato em preto e branco, com uma mão junto ao rosto', width: 2704, height: 3600 },
   { src: 'assets/img/galeria/IMG_7310.JPG.jpeg', alt: 'Jotapê de casaco preto e braços cruzados', width: 2928, height: 3904 },
   { src: 'assets/img/galeria/IMG_7311.JPG.jpeg', alt: 'Jotapê com as mãos tatuadas e anéis diante do rosto', width: 1888, height: 2528 },
@@ -9,6 +27,7 @@ const galleryImages = [
 ];
 
 function initGallery() {
+  let galleryImages = fallbackImages;
   const grid = document.querySelector('[data-gallery]');
   const dialog = document.querySelector('.gallery-lightbox');
   const full = dialog.querySelector('[data-full-image]');
@@ -36,8 +55,7 @@ function initGallery() {
     });
     document.querySelector('[data-carousel-count]').textContent = String(active + 1).padStart(2, '0') + ' / ' + String(galleryImages.length).padStart(2, '0');
     const caption = document.querySelector('[data-active-caption]');
-    caption.textContent = galleryImages[active].caption || '';
-    caption.hidden = !caption.textContent;
+    renderGalleryDetails(caption, galleryImages[active]);
   }
 
   function show(index) {
@@ -45,34 +63,41 @@ function initGallery() {
     const photo = galleryImages[current];
     full.src = photo.src;
     full.alt = photo.alt;
-    caption.textContent = photo.alt;
+    renderGalleryDetails(caption, photo);
     count.textContent = (current + 1) + ' / ' + galleryImages.length;
   }
-  galleryImages.forEach((photo, index) => {
-    const figure = document.createElement('figure');
-    figure.className = 'gallery-item';
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.setAttribute('aria-label', 'Ampliar: ' + photo.alt);
-    button.setAttribute('aria-haspopup', 'dialog');
-    const image = document.createElement('img');
-    Object.assign(image, photo, { loading: index === 0 ? 'eager' : 'lazy', decoding: 'async' });
-    image.draggable = false;
-    button.append(image);
-    figure.append(button);
-    grid.append(figure);
-    slides.push(figure);
-    button.addEventListener('click', () => {
-      if (Date.now() < suppressClickUntil) return;
-      if (index !== active) { activate(index); return; }
-      trigger = button;
-      show(index);
-      dialog.showModal();
-      document.body.classList.add('gallery-open');
-      close.focus();
+  function renderPhotos() {
+    grid.replaceChildren();
+    slides.length = 0;
+    galleryImages.forEach((photo, index) => {
+      const figure = document.createElement('figure');
+      figure.className = 'gallery-item';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', 'Ampliar: ' + photo.alt);
+      button.setAttribute('aria-haspopup', 'dialog');
+      const image = document.createElement('img');
+      Object.assign(image, { src: photo.src, alt: photo.alt, loading: index === 0 ? 'eager' : 'lazy', decoding: 'async' });
+      if (photo.width) image.width = photo.width;
+      if (photo.height) image.height = photo.height;
+      image.draggable = false;
+      button.append(image);
+      figure.append(button);
+      grid.append(figure);
+      slides.push(figure);
+      button.addEventListener('click', () => {
+        if (Date.now() < suppressClickUntil) return;
+        if (index !== active) { activate(index); return; }
+        trigger = button;
+        show(index);
+        dialog.showModal();
+        document.body.classList.add('gallery-open');
+        close.focus();
+      });
     });
-  });
-  activate(0);
+    activate(0);
+  }
+  renderPhotos();
   document.querySelector('[data-carousel-previous]').addEventListener('click', () => activate(active - 1));
   document.querySelector('[data-carousel-next]').addEventListener('click', () => activate(active + 1));
   carousel.addEventListener('keydown', event => {
@@ -131,5 +156,21 @@ function initGallery() {
     touchStart = null;
   }, { passive: true });
   full.addEventListener('touchcancel', () => { touchStart = null; });
+  // A integração é opcional: falhas ao importar/configurar não bloqueiam fotos locais.
+  import('./public/gallery-service.js').then(module => module.loadPublishedGallery()).then(published => {
+    if (!Array.isArray(published) || !published.length) return;
+    const replace = () => {
+      const restoreFocus = grid.contains(document.activeElement);
+      galleryImages = published;
+      drag = null;
+      renderPhotos();
+      if (restoreFocus) slides[0].querySelector('button').focus({ preventScroll: true });
+    };
+    // Não trocar a coleção enquanto alguém explora uma foto ampliada.
+    if (dialog.open) dialog.addEventListener('close', replace, { once: true });
+    else replace();
+  }).catch(() => { /* Preservar a coleção local e seus controles. */ });
 }
 initGallery();
+
+})();

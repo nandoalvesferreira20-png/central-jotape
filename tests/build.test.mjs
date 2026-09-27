@@ -14,6 +14,9 @@ test('build publica apenas arquivos permitidos e recusa chave administrativa', a
   assert.ok(!config.includes('SUPABASE_ANON_KEY'));
   await assert.rejects(access(new URL('../dist/config/supabase-config.example.js', import.meta.url)));
   assert.deepEqual(await readFile(new URL('../dist/index.html', import.meta.url)), await readFile(new URL('../index.html', import.meta.url)));
+  for (const file of ['admin/galeria.html', 'galeria.html', 'js/galeria.js', 'js/home-gallery.js', 'js/admin/galeria.js', 'js/admin/gallery-service.js', 'js/public/gallery-service.js', 'css/admin.css', 'css/galeria.css']) {
+    assert.deepEqual(await readFile(new URL('../dist/' + file, import.meta.url)), await readFile(new URL('../' + file, import.meta.url)));
+  }
   for (const file of ['supabase', '.env.example', 'tests', 'README.md', '.git', 'node_modules']) {
     await assert.rejects(access(new URL('../dist/' + file, import.meta.url)));
   }

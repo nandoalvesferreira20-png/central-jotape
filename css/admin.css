@@ -111,6 +111,11 @@ noscript p { margin: 24px; }
 .record { flex-wrap: wrap; }
 .record .actions { flex-shrink: 1; }
 
+/* Galeria: componentes restritos à nova seção. */
+.gallery-admin-thumb { width: 100px; height: 120px; object-fit: contain; }
+.gallery-admin-preview { width: min(100%, 380px); max-height: 320px; object-fit: contain; }
+.gallery-admin-record > div:not(.actions) { flex: 1; overflow-wrap: anywhere; }
+
 /* Crédito da imagem na prévia editorial. */
 .news-preview .news-image { margin: 22px 0; }
 .news-preview .news-image .news-cover { margin: 0; }

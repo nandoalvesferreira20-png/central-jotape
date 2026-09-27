@@ -7,7 +7,8 @@ export function validateImage(file) {
 }
 export async function uploadImage(client, file, folder = 'news') {
   validateImage(file);
-  if (!['news', 'news/covers', 'news/content', 'news-inline', 'events', 'trajectory'].includes(folder)) throw new ValidationError('Pasta de mídia inválida.');
+  if (folder === 'gallery' && !['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new ValidationError('Envie uma imagem JPEG, PNG ou WebP.');
+  if (!['news', 'news/covers', 'news/content', 'news-inline', 'events', 'trajectory', 'gallery'].includes(folder)) throw new ValidationError('Pasta de mídia inválida.');
   const bytes = new Uint8Array(await file.slice(0, 16).arrayBuffer());
   const signature = String.fromCharCode(...bytes);
   const valid = file.type === 'image/jpeg' ? bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
@@ -22,7 +23,7 @@ export async function uploadImage(client, file, folder = 'news') {
   return { path, url: data.publicUrl };
 }
 export async function removeImage(client, path) {
-  if (!/^(news(?:\/covers|\/content)?|news-inline|events|trajectory)\/[0-9a-f-]{36}\.(jpg|png|webp|avif)$/.test(path)) {
+  if (!/^(news(?:\/covers|\/content)?|news-inline|events|trajectory|gallery)\/[0-9a-f-]{36}\.(jpg|png|webp|avif)$/.test(path)) {
     throw new ValidationError('Caminho de mídia inválido.');
   }
   const { error } = await client.storage.from(BUCKET).remove([path]);

@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { createDevServer } from '../../scripts/serve.mjs';
 let server;
+test.beforeEach(async ({ page }) => {
+  // Fallback determinístico; os cenários CMS têm seu próprio backend de teste.
+  await page.route('https://esm.sh/**', route => route.abort());
+});
 test.beforeAll(async () => {
   server = createDevServer();
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(4176, '127.0.0.1', resolve); });

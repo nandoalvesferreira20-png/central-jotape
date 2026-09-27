@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Galeria | Painel Central Jotapê</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/admin.css">
+  <script type="module" src="../js/admin/galeria.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="auth-loading" data-auth-loading><p class="notice" role="status">Verificando acesso… Se esta mensagem persistir, confira sua conexão e recarregue.</p><a href="login.html">Ir para o login</a></div>
+  <noscript><p>Ative o JavaScript para acessar o painel. A página pública continua disponível.</p></noscript>
+  <div class="admin-shell" data-admin-content hidden>
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Central Jotapê MC</a>
+      <small>Painel editorial · V2</small>
+      <nav aria-label="Navegação administrativa">
+        <a href="index.html">Visão geral</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="trajetoria.html">Trajetória 2026</a>
+        <a href="galeria.html" aria-current="page">Galeria</a>
+      </nav>
+      <button class="secondary" type="button" data-logout>Sair</button>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span data-user></span><a href="../index.html">Ver site público ↗</a></header>
+      <main class="main" id="main">
+        <div class="page-heading"><h1>Galeria</h1></div>
+        <p class="notice" role="status" aria-live="polite" data-message></p>
+        <p class="muted">Cadastre fotografias, defina a ordem e escolha quais publicar.</p>
+        <section class="panel" aria-label="Fotografias cadastradas">
+          <button class="secondary" type="button" data-refresh>Atualizar lista</button>
+          <div data-records aria-live="polite"></div>
+        </section>
+        <form id="gallery-form" class="panel"><fieldset disabled>
+          <h2 id="form-title">Nova foto</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="image">Imagem *</label><input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp" required aria-describedby="image-help"><p id="image-help" class="help">JPEG, PNG ou WebP, até 5 MB. Ao editar, selecione um arquivo apenas para substituir a imagem. Os arquivos enviados são públicos, inclusive em rascunhos.</p><img class="gallery-admin-preview" data-preview alt="Prévia da imagem selecionada" hidden></div>
+            <div class="field full"><label for="caption">Legenda</label><textarea id="caption" name="caption"></textarea></div>
+            <div class="field full"><label for="image_credit">Crédito da foto</label><input id="image_credit" name="image_credit" type="text"></div>
+            <div class="field full"><label for="alt_text">Alt text</label><input id="alt_text" name="alt_text" type="text"><p class="help">Recomendado: descreva o que aparece na fotografia.</p></div>
+            <div class="field"><label for="position">Ordem de exibição</label><input id="position" name="position" type="number" step="1" min="-2147483648" max="2147483647" value="0" required></div>
+            <div class="field"><label for="publication_status">Status</label><select id="publication_status" name="publication_status"><option value="draft">Rascunho</option><option value="published">Publicado</option></select></div>
+          </div>
+          <div class="actions form-actions"><button type="submit">Salvar foto</button><button type="reset" class="secondary">Nova / limpar formulário</button></div>
+        </fieldset></form>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+
