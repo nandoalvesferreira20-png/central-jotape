@@ -14,7 +14,7 @@ A plataforma reúne notícias, música, trajetória competitiva, galeria de foto
 - **Recuperação de senha:** solicitação por e-mail, redefinição e retorno ao login.
 - **Interface responsiva:** HTML, CSS e JavaScript puro, sem framework.
 
-A agenda da home é editorial estática: não consulta automaticamente os registros do painel. Links de ingressos, música, merch e redes direcionam aos destinos configurados; o portal não implementa loja ou player próprio.
+A agenda da home consulta os eventos publicados no painel, com data de hoje ou futura em America/Sao_Paulo. Sem próximos eventos ou em caso de falha, permanece o estado “Em breve”. Veja [o schema, as permissões e o funcionamento da Agenda](docs/AGENDA.md). Links de ingressos, música, merch e redes direcionam aos destinos configurados; o portal não implementa loja ou player próprio.
 
 ## Executar localmente
 
@@ -62,7 +62,7 @@ SMTP próprio será configurado posteriormente. O fluxo de recuperação permane
 
 ## Conteúdo e manutenção
 
-Atualize notícias e trajetória pelo painel. Na home, agenda, números de carreira e links editoriais estáticos devem receber somente dados confirmados; campos sem informação não representam conquistas ou eventos inventados.
+Atualize notícias, agenda e trajetória pelo painel. Números de carreira e links editoriais estáticos devem receber somente dados confirmados; campos sem informação não representam conquistas ou eventos inventados.
 
 Para adicionar fotos, siga [o guia da galeria](docs/GALERIA.md). As imagens originais são preservadas; não substituir arquivos sem revisar referências, alt e enquadramento.
 

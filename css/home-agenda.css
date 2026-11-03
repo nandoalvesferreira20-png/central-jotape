@@ -1,0 +1,6 @@
+/* Apenas os registros dinâmicos da Agenda; composição e tipografia existentes. */
+#agenda .event-list, #agenda .event-details { min-width: 0; }
+#agenda .event-details { flex: 1; overflow-wrap: anywhere; }
+#agenda .event-date { flex-shrink: 0; }
+#agenda .event-ticket { margin-top: 14px; max-width: 100%; }
+#agenda .event-image { display: block; width: 100%; max-width: 240px; max-height: 180px; height: auto; object-fit: contain; object-position: left; margin-top: 14px; }

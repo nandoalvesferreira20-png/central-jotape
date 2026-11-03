@@ -16,6 +16,8 @@
     </script>
     <link rel="stylesheet" href="css/home-news.css">
     <script type="module" src="js/public/home-news.js"></script>
+    <link rel="stylesheet" href="css/home-agenda.css">
+    <script type="module" src="js/public/home-agenda.js"></script>
       <link rel="stylesheet" href="css/editorial-system.css">
     <link rel="stylesheet" href="css/galeria.css">
   <meta property="og:type" content="website">
@@ -483,7 +485,7 @@
               <p class="muted">
                 Novos palcos. A mesma conexão.
               </p>
-              <!-- Substituir os registros abaixo somente por eventos oficiais, com time datetime e URL de ingresso. -->
+              <div data-agenda-events aria-live="polite">
               <article class="event" data-event="pending">
                 <div class="event-date">
                   EM
@@ -503,7 +505,8 @@
                   A anunciar
                 </span>
               </article>
-              <p class="event-note">
+              </div>
+              <p class="event-note" data-agenda-empty-note>
                 Novas datas serão divulgadas aqui após confirmação.
               </p>
               <a class="text-link" href="https://linktr.ee/centraljotapemc" target="_blank" rel="noopener noreferrer">

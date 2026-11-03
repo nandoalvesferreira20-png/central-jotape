@@ -2,7 +2,8 @@ import { protectPage } from './auth.js';
 import { createListView } from './list-view.js';
 import { saveRecord } from './repository.js';
 import { bindUpload } from './storage.js';
-import { message, friendlyError, withBusy, setFields } from './ui.js';
+import { message, friendlyError, withBusy, setFields, element } from './ui.js';
+import { eventDateParts, eventTime } from '../events.js';
 import { required, optional, httpsUrl, enumValue, dateOnly, ValidationError } from './validation.js';
 
 export function eventPayload(data) {
@@ -27,12 +28,29 @@ async function init() {
   const heading = document.querySelector('#form-title');
   const view = createListView(client, 'events', {
     order: 'event_date',
-    describe: row => row.event_date + ' · ' + row.city + ' · ' + (row.status === 'published' ? 'Publicado' : 'Rascunho'),
+    describe: row => [eventDateParts(row.event_date).full, eventTime(row.event_time), row.venue, row.city,
+      row.status === 'published' ? 'Publicado' : 'Rascunho'].filter(Boolean).join(' · '),
     edit: row => {
       id = row.id;
       setFields(form, { ...row, event_time: row.event_time?.slice(0, 5) });
       heading.textContent = 'Editar evento';
       form.elements.title.focus();
+    },
+    extraActions: (actions, row, refresh) => {
+      const button = element('button', row.status === 'published' ? 'Despublicar' : 'Publicar', 'secondary');
+      button.type = 'button';
+      button.addEventListener('click', async () => {
+        await withBusy(actions, async () => {
+          const status = row.status === 'published' ? 'draft' : 'published';
+          try {
+            await saveRecord(client, 'events', { status }, row.id);
+            if (id === row.id) form.elements.status.value = status;
+            await refresh();
+            message(status === 'published' ? 'Evento publicado.' : 'Evento despublicado.');
+          } catch (error) { message(friendlyError(error), true); }
+        });
+      });
+      actions.append(button);
     },
   });
   form.querySelector('fieldset').disabled = false;
@@ -51,7 +69,7 @@ async function init() {
         id = record.id;
         heading.textContent = 'Editar evento';
         await view.refresh();
-        message('Evento salvo. A agenda da página inicial ainda não consulta o banco.');
+        message(payload.status === 'published' ? 'Evento publicado. A home exibirá a data se for hoje ou futura, ao carregar a página.' : 'Evento salvo como rascunho.');
       } catch (error) { message(friendlyError(error), true); }
     });
   });

@@ -57,7 +57,10 @@ function campaignPhoto(trajectory) {
 const approvedRhymes = [
   'Eu trampei nas praças e foi tudo com rima, mas sem vender meu corpo, sem vender minha mente, tenho ideias de graça, todas literalmente.',
   'Mano eu sei que a cada 10, 11 vai ser na maldade e sei que a cada 16, eu vou ser o melhor da chave',
-  'Você mata um leão por dia, eu sobrevivo na savana.'
+  'Você mata um leão por dia, eu sobrevivo na savana.',
+  'O Jotapê detesta “a vida é uma festa” eu canto pra minha mãe até hoje “lembre de mim” eu canto pra minha avó até hoje “lembre de mim” eu canto isso em coro, dentro da minha quebrada.',
+  'Meu protagonismo não é um nepotismo, então seja bem vindo esse é o filme parasita',
+  'O Brasil, eu não sei, esse estado aqui é meu.'
 ];
 function renderRhymes() {
   const section = node('section', undefined, 'journey-section journey-rhymes');

@@ -31,7 +31,7 @@
       <main class="main" id="main">
         <div class="page-heading"><h1>Agenda</h1></div>
         <p class="notice" role="status" aria-live="polite" data-message></p>
-        <p class="muted">Cadastre apenas eventos com informações confirmadas. O horário corresponde ao local do evento.</p><section class="panel" aria-label="Registros"><div class="toolbar"><button class="secondary" type="button" data-refresh>Atualizar lista</button></div><div data-records aria-live="polite"></div><div class="pagination"><button class="secondary" type="button" data-previous disabled>Anterior</button><span data-page></span><button class="secondary" type="button" data-next disabled>Próxima</button></div></section>
+        <p class="muted">Cadastre apenas eventos com informações confirmadas. Datas e horários seguem America/Sao_Paulo. A lista mostra as datas mais recentes primeiro; eventos passados permanecem no histórico.</p><section class="panel" aria-label="Registros"><div class="toolbar"><button class="secondary" type="button" data-refresh>Atualizar lista</button></div><div data-records aria-live="polite"></div><div class="pagination"><button class="secondary" type="button" data-previous disabled>Anterior</button><span data-page></span><button class="secondary" type="button" data-next disabled>Próxima</button></div></section>
 <form id="event-form" class="panel"><fieldset disabled><h2 id="form-title">Novo evento</h2><p class="help">* Campos obrigatórios.</p><div class="form-grid">
 <div class="field full">
   <label for="title">Título do evento *</label>
@@ -45,7 +45,7 @@
   
 </div>
 <div class="field">
-  <label for="event_time">Horário local</label>
+  <label for="event_time">Horário (São Paulo)</label>
   <input id="event_time" name="event_time" type="time">
   
 </div>
